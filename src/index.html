@@ -12,10 +12,10 @@
             --primary: #ff7eb9;
             --secondary: #7afcff;
             --accent: #ff65a3;
-            --background: #f9f7ff;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --text: #2e2e48;
-            --shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+            --background: #1a1a2e;
+            --card-bg: rgba(26, 26, 46, 0.95);
+            --text: #e6e6ff;
+            --shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
             --radius: 16px;
             --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
@@ -28,7 +28,7 @@
 
         body {
             font-family: 'Noto Sans SC', sans-serif;
-            background: linear-gradient(135deg, #f9f7ff 0%, #e6e3ff 100%);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             color: var(--text);
             min-height: 100vh;
             padding: 2rem 1rem;
@@ -49,48 +49,20 @@
             box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
-        }
-
-        header::before {
-            content: "";
-            position: absolute;
-            top: -50px;
-            left: -50px;
-            width: 150px;
-            height: 150px;
-            background: var(--primary);
-            opacity: 0.1;
-            border-radius: 50%;
-        }
-
-        header::after {
-            content: "";
-            position: absolute;
-            bottom: -80px;
-            right: -80px;
-            width: 200px;
-            height: 200px;
-            background: var(--secondary);
-            opacity: 0.1;
-            border-radius: 50%;
-            z-index: -1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         h1 {
-            color: var(--accent);
+            color: var(--primary);
             font-size: 2.8rem;
             margin-bottom: 1rem;
-            position: relative;
-            z-index: 1;
         }
 
         .lead {
             font-size: 1.2rem;
-            color: #666;
+            color: #a0a0d0;
             max-width: 800px;
             margin: 0 auto;
-            position: relative;
-            z-index: 1;
         }
 
         .hero-section {
@@ -108,10 +80,12 @@
             padding: 2rem;
             box-shadow: var(--shadow);
             transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .usage-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
+            border-color: rgba(255, 126, 185, 0.3);
         }
 
         .usage-card h2 {
@@ -122,21 +96,19 @@
             gap: 0.8rem;
         }
 
-        .usage-card h2 i {
-            font-size: 1.5rem;
-        }
-
         .code-block {
-            background: #2e2e48;
+            background: #0f0f1f;
             color: #f1f1ff;
             padding: 1.2rem;
             border-radius: 10px;
-            font-family: monospace;
+            font-family: 'Fira Code', monospace;
             font-size: 0.95rem;
-            white-space: nowrap;
             overflow-x: auto;
+            white-space: pre-wrap; /* 关键修改：支持自动换行 */
+            word-break: break-all;
             margin: 1rem 0;
             position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .code-block::after {
@@ -159,20 +131,16 @@
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             margin-bottom: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .counter-preview {
             display: inline-block;
             padding: 1.5rem;
-            background: white;
+            background: #0f0f1f;
             border-radius: var(--radius);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
             margin: 1.5rem 0;
-            transition: var(--transition);
-        }
-
-        .counter-preview:hover {
-            transform: scale(1.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .theme-gallery {
@@ -189,11 +157,12 @@
             box-shadow: var(--shadow);
             transition: var(--transition);
             cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .theme-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+            border-color: rgba(255, 126, 185, 0.3);
         }
 
         .theme-card img {
@@ -210,7 +179,7 @@
 
         .theme-name {
             font-weight: 700;
-            color: var(--accent);
+            color: var(--primary);
             margin-bottom: 0.5rem;
         }
 
@@ -220,17 +189,12 @@
             padding: 2.5rem;
             box-shadow: var(--shadow);
             margin: 3rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .generator-header {
             text-align: center;
             margin-bottom: 2rem;
-        }
-
-        .generator-header h2 {
-            color: var(--accent);
-            font-size: 2rem;
-            margin-bottom: 1rem;
         }
 
         .input-group {
@@ -244,10 +208,11 @@
             flex: 1;
             min-width: 200px;
             padding: 0.8rem 1.2rem;
-            border: 2px solid #e0e0ff;
+            border: 2px solid rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             font-size: 1rem;
-            background: white;
+            background: #0f0f1f;
+            color: var(--text);
             transition: var(--transition);
         }
 
@@ -281,9 +246,10 @@
             text-align: center;
             margin-top: 2rem;
             padding: 2rem;
-            background: white;
+            background: #0f0f1f;
             border-radius: var(--radius);
             position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .live-preview-label {
@@ -292,19 +258,18 @@
             left: 50%;
             transform: translateX(-50%);
             background: var(--secondary);
-            color: var(--text);
+            color: #1a1a2e;
             padding: 0.3rem 1rem;
             border-radius: 20px;
             font-weight: 700;
             font-size: 0.9rem;
-            box-shadow: 0 3px 10px rgba(122, 252, 255, 0.3);
         }
 
         footer {
             text-align: center;
             margin-top: 3rem;
             padding: 2rem;
-            color: #666;
+            color: #a0a0d0;
         }
 
         @media (max-width: 768px) {
@@ -318,6 +283,11 @@
             
             h1 {
                 font-size: 2.2rem;
+            }
+            
+            .code-block {
+                font-size: 0.85rem;
+                padding: 1rem;
             }
         }
     </style>
@@ -351,7 +321,6 @@
             <div class="counter-preview">
                 <img id="demoPreview" src="" alt="计数器预览" height="80">
             </div>
-            <p>实时更新 • 多主题可选 • 自动计数</p>
         </div>
 
         <div class="generator-box">
@@ -450,7 +419,6 @@
         // 初始化
         document.addEventListener('DOMContentLoaded', () => {
             updateExamples();
-            // 初始生成一次预览
             setTimeout(generateCounter, 500);
         });
     </script>
