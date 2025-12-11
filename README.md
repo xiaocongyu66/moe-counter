@@ -2,7 +2,7 @@
 
 基于 [Cloudflare Workers](https://workers.cloudflare.com/) 的 [Moe-Counter](https://github.com/journey-ad/Moe-Counter) 萌萌计数器的分叉。
 
-![Moe Counter](https://moe-counter.lxchapu.com/github@moe-counter)
+![Moe Counter](https://moe.cy96.ggff.net/github@moe-counter-cf)
 
 <details>
 <summary>More theme</summary>
