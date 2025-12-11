@@ -36,7 +36,7 @@
         }
 
         .container {
-            max-width: 1000px; /* 调整为更宽的最大宽度 */
+            max-width: 1000px;
             margin: 0 auto;
         }
 
@@ -65,7 +65,6 @@
             margin: 0 auto;
         }
 
-        /* 修改为垂直布局 */
         .usage-section {
             display: flex;
             flex-direction: column;
@@ -103,14 +102,14 @@
             padding: 1.2rem;
             border-radius: 10px;
             font-family: 'Fira Code', monospace;
-            font-size: 1rem; /* 增大字体大小 */
+            font-size: 1rem;
             overflow-x: auto;
             white-space: pre-wrap;
             word-break: break-all;
             margin: 1rem 0;
             position: relative;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            line-height: 1.8; /* 增加行高 */
+            line-height: 1.8;
         }
 
         .code-block::after {
@@ -145,13 +144,6 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .theme-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
         .generator-box {
             background: var(--card-bg);
             border-radius: var(--radius);
@@ -181,7 +173,7 @@
 
         input, select {
             flex: 1;
-            min-width: 250px; /* 增大最小宽度 */
+            min-width: 250px;
             padding: 0.8rem 1.2rem;
             border: 2px solid rgba(255, 255, 255, 0.1);
             border-radius: 10px;
@@ -195,27 +187,6 @@
             border-color: var(--primary);
             outline: none;
             box-shadow: 0 0 0 3px rgba(255, 126, 185, 0.2);
-        }
-
-        button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            min-width: 150px; /* 添加最小宽度 */
-        }
-
-        button:hover {
-            background: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 101, 163, 0.3);
         }
 
         .live-preview {
@@ -249,7 +220,6 @@
         }
 
         @media (min-width: 992px) {
-            /* 电脑端优化 */
             .container {
                 padding: 0 2rem;
             }
@@ -277,11 +247,6 @@
                 font-size: 0.92rem;
                 padding: 1rem;
             }
-            
-            button {
-                width: 100%;
-                justify-content: center;
-            }
         }
     </style>
 </head>
@@ -292,7 +257,6 @@
             <p class="lead">创建属于你的个性化萌系访客计数器，多种风格主题一键生成</p>
         </header>
 
-        <!-- 改为垂直布局的用法区域 -->
         <div class="usage-section">
             <div class="usage-card">
                 <h2><i class="fas fa-link"></i> SVG 地址</h2>
@@ -320,7 +284,7 @@
         <div class="generator-box">
             <div class="generator-header">
                 <h2><i class="fas fa-magic"></i> 生成你的计数器</h2>
-                <p>输入名称并选择主题，实时生成专属计数器</p>
+                <p>输入名称并选择主题，实时预览专属计数器</p>
             </div>
             
             <div class="input-group">
@@ -333,12 +297,9 @@
                     <option value="gelbooru">Gelbooru</option>
                     <option value="gelbooru-h">Gelbooru-Hentai (NSFW)</option>
                 </select>
-                <button id="generateBtn">
-                    <i class="fas fa-wand-magic-sparkles"></i> 立即生成
-                </button>
             </div>
             
-            <div class="code-block" id="generatedUrl">生成后将显示在这里</div>
+            <div class="code-block" id="generatedUrl">输入信息后将显示生成地址</div>
             
             <div class="live-preview">
                 <div class="live-preview-label">实时预览</div>
@@ -366,7 +327,6 @@
             demoPreview: document.getElementById('demoPreview'),
             counterName: document.getElementById('counterName'),
             themeSelect: document.getElementById('themeSelect'),
-            generateBtn: document.getElementById('generateBtn'),
             generatedUrl: document.getElementById('generatedUrl'),
             livePreview: document.getElementById('livePreview')
         };
@@ -405,10 +365,9 @@
             });
         });
 
-        // 主题切换实时预览
+        // 实时监听输入变化
         elements.themeSelect.addEventListener('change', generateCounter);
         elements.counterName.addEventListener('input', generateCounter);
-        elements.generateBtn.addEventListener('click', generateCounter);
 
         // 初始化
         document.addEventListener('DOMContentLoaded', () => {
