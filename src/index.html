@@ -170,6 +170,48 @@
             padding: 1.5rem;
             background: #0f0f1f;
             border-radius: var(--radius);
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 126, 185, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .retry-button {
+            background: rgba(255, 126, 185, 0.1);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .retry-button:hover {
+            background: var(--primary);
+            color: white;
         }
 
         .generator-box {
@@ -225,6 +267,10 @@
             border-radius: var(--radius);
             position: relative;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .live-preview-label {
@@ -315,7 +361,11 @@
                 </div>
                 <div class="theme-url" id="asoulUrl">loading...</div>
                 <div class="theme-example">
-                    <img id="asoulPreview" alt="A-SOUL 主题预览" height="80">
+                    <div class="image-container">
+                        <img id="asoulPreview" alt="A-SOUL 主题预览" height="80" 
+                             data-theme="asoul" loading="lazy">
+                    </div>
+                    <div class="loading-status"></div>
                 </div>
             </div>
             
@@ -327,7 +377,11 @@
                 </div>
                 <div class="theme-url" id="moebooruUrl">loading...</div>
                 <div class="theme-example">
-                    <img id="moebooruPreview" alt="Moebooru 主题预览" height="80">
+                    <div class="image-container">
+                        <img id="moebooruPreview" alt="Moebooru 主题预览" height="80" 
+                             data-theme="moebooru" loading="lazy">
+                    </div>
+                    <div class="loading-status"></div>
                 </div>
             </div>
             
@@ -339,7 +393,11 @@
                 </div>
                 <div class="theme-url" id="moebooruHUrl">loading...</div>
                 <div class="theme-example">
-                    <img id="moebooruHPreview" alt="Moebooru-Hentai 主题预览" height="80">
+                    <div class="image-container">
+                        <img id="moebooruHPreview" alt="Moebooru-Hentai 主题预览" height="80" 
+                             data-theme="moebooru-h" loading="lazy">
+                    </div>
+                    <div class="loading-status"></div>
                 </div>
             </div>
             
@@ -351,7 +409,11 @@
                 </div>
                 <div class="theme-url" id="rule34Url">loading...</div>
                 <div class="theme-example">
-                    <img id="rule34Preview" alt="Rule34 主题预览" height="80">
+                    <div class="image-container">
+                        <img id="rule34Preview" alt="Rule34 主题预览" height="80" 
+                             data-theme="rule34" loading="lazy">
+                    </div>
+                    <div class="loading-status"></div>
                 </div>
             </div>
             
@@ -363,7 +425,11 @@
                 </div>
                 <div class="theme-url" id="gelbooruUrl">loading...</div>
                 <div class="theme-example">
-                    <img id="gelbooruPreview" alt="Gelbooru 主题预览" height="80">
+                    <div class="image-container">
+                        <img id="gelbooruPreview" alt="Gelbooru 主题预览" height="80" 
+                             data-theme="gelbooru" loading="lazy">
+                    </div>
+                    <div class="loading-status"></div>
                 </div>
             </div>
             
@@ -375,7 +441,11 @@
                 </div>
                 <div class="theme-url" id="gelbooruHUrl">loading...</div>
                 <div class="theme-example">
-                    <img id="gelbooruHPreview" alt="Gelbooru-Hentai 主题预览" height="80">
+                    <div class="image-container">
+                        <img id="gelbooruHPreview" alt="Gelbooru-Hentai 主题预览" height="80" 
+                             data-theme="gelbooru-h" loading="lazy">
+                    </div>
+                    <div class="loading-status"></div>
                 </div>
             </div>
         </div>
@@ -402,7 +472,10 @@
             
             <div class="live-preview">
                 <div class="live-preview-label">实时预览</div>
-                <img id="livePreview" src="" alt="实时预览" height="100" style="margin-top: 1.5rem;">
+                <div class="preview-container">
+                    <img id="livePreview" alt="实时预览" height="100" style="margin-top: 1.5rem;">
+                </div>
+                <div class="live-preview-status"></div>
             </div>
         </div>
 
@@ -413,87 +486,184 @@
     </div>
 
     <script>
+        // 配置信息
         const currentDomain = window.location.origin;
         const defaultName = "your-counter-name";
         const defaultTheme = "asoul";
-        
-        const elements = {
-            svgUrl: document.getElementById('svgUrl'),
-            htmlCode: document.getElementById('htmlCode'),
-            markdownCode: document.getElementById('markdownCode'),
-            counterName: document.getElementById('counterName'),
-            themeSelect: document.getElementById('themeSelect'),
-            generatedUrl: document.getElementById('generatedUrl'),
-            livePreview: document.getElementById('livePreview'),
-            
-            // 主题预览元素
-            asoulPreview: document.getElementById('asoulPreview'),
-            moebooruPreview: document.getElementById('moebooruPreview'),
-            moebooruHPreview: document.getElementById('moebooruHPreview'),
-            rule34Preview: document.getElementById('rule34Preview'),
-            gelbooruPreview: document.getElementById('gelbooruPreview'),
-            gelbooruHPreview: document.getElementById('gelbooruHPreview'),
-            
-            asoulUrl: document.getElementById('asoulUrl'),
-            moebooruUrl: document.getElementById('moebooruUrl'),
-            moebooruHUrl: document.getElementById('moebooruHUrl'),
-            rule34Url: document.getElementById('rule34Url'),
-            gelbooruUrl: document.getElementById('gelbooruUrl'),
-            gelbooruHUrl: document.getElementById('gelbooruHUrl')
+
+        // 主题列表
+        const THEMES = [
+            { id: 'asoul', name: 'A-SOUL 主题', icon: 'fas fa-star' },
+            { id: 'moebooru', name: 'Moebooru 主题', icon: 'fas fa-moon' },
+            { id: 'moebooru-h', name: 'Moebooru-Hentai 主题', icon: 'fas fa-eye-slash' },
+            { id: 'rule34', name: 'Rule34 主题 (NSFW)', icon: 'fas fa-exclamation-triangle' },
+            { id: 'gelbooru', name: 'Gelbooru 主题', icon: 'fas fa-paint-brush' },
+            { id: 'gelbooru-h', name: 'Gelbooru-Hentai 主题 (NSFW)', icon: 'fas fa-exclamation-circle' }
+        ];
+
+        // 初始化 Intersection Observer
+        const initObserver = () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        const theme = img.dataset.theme;
+                        
+                        // 显示加载状态
+                        const statusDiv = img.closest('.theme-example').querySelector('.loading-status');
+                        showLoadingStatus(statusDiv, `正在加载 ${getThemeName(theme)}...`);
+                        
+                        // 异步加载图片
+                        loadImageAsync(img, theme).then(() => {
+                            clearStatus(statusDiv);
+                        }).catch(error => {
+                            console.error(`[加载失败] 主题: ${theme}`, error);
+                            showErrorStatus(statusDiv, theme);
+                        });
+                        
+                        // 停止观察
+                        observer.unobserve(img);
+                    }
+                });
+            }, {
+                rootMargin: '100px 0px',
+                threshold: 0.01
+            });
+
+            // 观察所有主题图片
+            document.querySelectorAll('.theme-example img').forEach(img => {
+                observer.observe(img);
+            });
         };
 
-        function updateExamples() {
-            const exampleUrl = `${currentDomain}/${defaultName}`;
-            elements.svgUrl.textContent = exampleUrl;
-            elements.htmlCode.textContent = `<img src="${exampleUrl}" alt="${defaultName}" />`;
-            elements.markdownCode.textContent = `![${defaultName}](${exampleUrl})`;
-        }
-
-        function updateThemePreviews() {
-            const themes = [
-                'asoul', 
-                'moebooru', 
-                'moebooru-h', 
-                'rule34', 
-                'gelbooru', 
-                'gelbooru-h'
-            ];
-            
-            themes.forEach(theme => {
-                const demoUrl = `${currentDomain}/demo?theme=${theme}`;
-                elements[`${theme}Url`].textContent = demoUrl;
-                elements[`${theme}Preview`].src = demoUrl;
+        // 异步加载图片
+        const loadImageAsync = (imgElement, theme) => {
+            return new Promise((resolve, reject) => {
+                const demoUrl = `${currentDomain}/demo?theme=${theme}&t=${Date.now()}`;
+                
+                // 设置URL
+                imgElement.src = demoUrl;
+                document.getElementById(`${theme}Url`).textContent = demoUrl;
+                
+                // 加载成功处理
+                imgElement.onload = () => resolve();
+                
+                // 加载失败处理
+                imgElement.onerror = (error) => reject(error);
             });
-        }
+        };
 
-        function generateCounter() {
-            const name = elements.counterName.value.trim() || defaultName;
-            const theme = elements.themeSelect.value;
+        // 显示加载状态
+        const showLoadingStatus = (container, message) => {
+            container.innerHTML = `
+                <div class="loading-spinner"></div>
+                <div class="error-message">${message}</div>
+            `;
+        };
+
+        // 显示错误状态
+        const showErrorStatus = (container, theme) => {
+            container.innerHTML = `
+                <div class="error-message">
+                    加载失败 - ${getThemeName(theme)}<br>
+                    <div class="retry-button" onclick="retryLoadTheme('${theme}')">
+                        <i class="fas fa-redo"></i> 重试加载
+                    </div>
+                </div>
+            `;
+        };
+
+        // 清除状态
+        const clearStatus = (container) => {
+            container.innerHTML = '';
+        };
+
+        // 重试加载主题
+        window.retryLoadTheme = (theme) => {
+            const imgElement = document.getElementById(`${theme}Preview`);
+            const statusDiv = imgElement.closest('.theme-example').querySelector('.loading-status');
+            
+            showLoadingStatus(statusDiv, `正在重新加载 ${getThemeName(theme)}...`);
+            
+            loadImageAsync(imgElement, theme).then(() => {
+                clearStatus(statusDiv);
+            }).catch(error => {
+                console.error(`[重试失败] 主题: ${theme}`, error);
+                showErrorStatus(statusDiv, theme);
+            });
+        };
+
+        // 获取主题名称
+        const getThemeName = (themeId) => {
+            return THEMES.find(t => t.id === themeId)?.name || themeId;
+        };
+
+        // 更新示例
+        const updateExamples = () => {
+            const exampleUrl = `${currentDomain}/${defaultName}`;
+            document.getElementById('svgUrl').textContent = exampleUrl;
+            document.getElementById('htmlCode').textContent = `<img src="${exampleUrl}" alt="${defaultName}" />`;
+            document.getElementById('markdownCode').textContent = `![${defaultName}](${exampleUrl})`;
+        };
+
+        // 生成计数器
+        const generateCounter = () => {
+            const name = document.getElementById('counterName').value.trim() || defaultName;
+            const theme = document.getElementById('themeSelect').value;
             const counterUrl = `${currentDomain}/${encodeURIComponent(name)}?theme=${theme}`;
             
-            elements.generatedUrl.textContent = counterUrl;
-            elements.livePreview.src = counterUrl;
-        }
+            const generatedUrl = document.getElementById('generatedUrl');
+            const livePreview = document.getElementById('livePreview');
+            const statusDiv = document.querySelector('.live-preview-status');
+            
+            generatedUrl.textContent = counterUrl;
+            
+            // 显示加载状态
+            statusDiv.innerHTML = `
+                <div class="loading-spinner"></div>
+                <div class="error-message">正在加载预览...</div>
+            `;
+            
+            // 异步加载预览图
+            livePreview.src = counterUrl;
+            livePreview.onload = () => clearStatus(statusDiv);
+            livePreview.onerror = () => {
+                statusDiv.innerHTML = `
+                    <div class="error-message">
+                        预览加载失败<br>
+                        <div class="retry-button" onclick="generateCounter()">
+                            <i class="fas fa-redo"></i> 重新加载
+                        </div>
+                    </div>
+                `;
+            };
+        };
 
-        document.querySelectorAll('.code-block').forEach(block => {
-            block.addEventListener('click', () => {
-                const text = block.textContent;
-                navigator.clipboard.writeText(text).then(() => {
-                    const originalText = block.textContent;
-                    block.textContent = '✅ 已复制到剪贴板！';
-                    setTimeout(() => {
-                        block.textContent = originalText;
-                    }, 1500);
+        // 初始化复制功能
+        const initCopy = () => {
+            document.querySelectorAll('.code-block').forEach(block => {
+                block.addEventListener('click', () => {
+                    const text = block.textContent;
+                    navigator.clipboard.writeText(text).then(() => {
+                        const originalText = block.textContent;
+                        block.textContent = '✅ 已复制到剪贴板！';
+                        setTimeout(() => {
+                            block.textContent = originalText;
+                        }, 1500);
+                    });
                 });
             });
-        });
+        };
 
-        elements.themeSelect.addEventListener('change', generateCounter);
-        elements.counterName.addEventListener('input', generateCounter);
-
+        // 页面初始化
         document.addEventListener('DOMContentLoaded', () => {
             updateExamples();
-            updateThemePreviews();
+            initObserver();
+            initCopy();
+            
+            // 初始化实时预览
+            document.getElementById('themeSelect').addEventListener('change', generateCounter);
+            document.getElementById('counterName').addEventListener('input', generateCounter);
             setTimeout(generateCounter, 500);
         });
     </script>
