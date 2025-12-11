@@ -1,131 +1,255 @@
 <!doctype html>
 <html lang="zh-CN">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Moe Counter</title>
-
-    <meta
-      name="description"
-      content="这是一个萌萌的访客计数器，可以嵌入到 Markdown、网页或者其他任何地方，有多种风格可选。"
-    />
+    <meta name="description" content="萌萌的访客计数器，支持多种风格主题" />
     <meta name="keywords" content="moe, visitor counter, 访客计数器, Cloudflare Workers" />
     <meta name="author" content="柃夏chapu" />
-
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moe.cy96.ggff.net/" />
+    <meta property="og:url" content="https://moe-counter.lxchapu.com/" />
     <meta property="og:title" content="Moe Counter" />
-    <meta
-      property="og:description"
-      content="这是一个萌萌的访客计数器，可以嵌入到 Markdown、网页或者其他任何地方，有多种风格可选。"
-    />
+    <meta property="og:description" content="这是一个萌萌的访客计数器，可以嵌入到 Markdown、网页或者其他任何地方，有多种风格可选。" />
     <meta property="og:image" content="https://s2.loli.net/2024/03/05/3XO1azMjC589Fd6.webp" />
-
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://moe.cy96.ggff.net/" />
     <meta property="twitter:title" content="Moe Counter" />
-    <meta
-      property="twitter:description"
-      content="这是一个萌萌的访客计数器，可以嵌入到 Markdown、网页或者其他任何地方，有多种风格可选。"
-    />
+    <meta property="twitter:description" content="这是一个萌萌的访客计数器，可以嵌入到 Markdown、网页或者其他任何地方，有多种风格可选。" />
     <meta property="twitter:image" content="https://s2.loli.net/2024/03/05/3XO1azMjC589Fd6.webp" />
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
     <style>
-      strong {
-        color: #ff4500;
-      }
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #4ecdc4;
+            --border-radius: 12px;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+        }
+        
+        h1 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+        
+        .counter-example {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+        }
+        
+        .theme-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .theme-card {
+            border: 1px solid #e9ecef;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .theme-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .theme-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .theme-name {
+            padding: 0.75rem;
+            text-align: center;
+            background: var(--secondary);
+            color: white;
+            font-weight: 500;
+        }
+        
+        .generator-box {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin: 2rem 0;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+        
+        #result {
+            margin-top: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .notice {
+            background: #fff3cd;
+            color: #856404;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin: 1rem 0;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #6c757d;
+        }
     </style>
-  </head>
-  <body>
-    <p>
-      This is a fork of <a href="https://github.com/journey-ad/Moe-Counter" target="_blank">Moe Counter</a>, based on
-      <a href="https://workers.cloudflare.com/" target="_blank">Cloudflare Workers</a>.
-    </p>
-
-    <h3>How to use:</h3>
-    <h5>SVG address</h5>
-    <code>https://moe.cy96.ggff.net/:id</code>
-    <h5>Img tag</h5>
-    <code>&lt;img src="https://moe.cy96.ggff.net/:id" alt=":id" /&gt;</code>
-    <h5>Markdown</h5>
-    <code>![:id](https://moe.cy96.ggff.net/:id)</code>
-
-    <h3>
-      eg:<img src="https://moe.cy96.ggff.net/github@moe-counter" alt="Moe Counter!" height="100" width="315" />
-    </h3>
-    <em>Data can access by anyone, please <strong>DO NOT</strong> enter personal information</em>
-
-    <details>
-      <summary>
-        <h3 style="display: inline-block">More theme</h3>
-      </summary>
-      <p>
-        Just use the query parameters <code>theme</code>, like this:
-        <code>https://moe.cy96.ggff.net/:id?theme=moebooru</code>
-      </p>
-      <h5>asoul</h5>
-      <img src="https://moe.cy96.ggff.net/demo?theme=asoul" alt="A-SOUL" />
-      <h5>moebooru</h5>
-      <img src="https://moe.cy96.ggff.net/demo?theme=moebooru" alt="Moebooru" />
-      <h5>moebooru-h</h5>
-      <img src="https://moe.cy96.ggff.net/demo?theme=moebooru-h" alt="Moebooru-Hentai" />
-      <h5>rule34</h5>
-      <img src="https://moe.cy96.ggff.net/demo?theme=rule34" alt="Rule34" />
-      <h5>gelbooru</h5>
-      <img src="https://moe.cy96.ggff.net/demo?theme=gelbooru" alt="Gelbooru" />
-      <h5>gelbooru-h</h5>
-      <img src="https://moe.cy96.ggff.net/demo?theme=gelbooru-h" alt="Gelbooru-Hentai" />
-    </details>
-
-    <h3>Credits</h3>
-    <ul>
-      <li><a href="https://space.bilibili.com/703007996" target="_blank" rel="nofollow">A-SOUL</a></li>
-      <li><a href="https://github.com/moebooru/moebooru" target="_blank" rel="nofollow">moebooru</a></li>
-      <li><a href="https://rule34.xxx/" target="_blank" rel="nofollow">rule34.xxx</a> <strong>NSFW</strong></li>
-      <li><a href="https://gelbooru.com/" target="_blank" rel="nofollow">gelbooru.com</a> <strong>NSFW</strong></li>
-    </ul>
-
-    <h3>Tool</h3>
-    <div>
-      <code>https://moe.cy96.ggff.net/</code>
-      <input
-        id="name"
-        type="text"
-        placeholder=":name"
-        style="display: inline; width: 80px; margin: 0 4px; vertical-align: middle"
-      />
-      <code>?theme=</code>
-      <select id="theme" style="display: inline; margin: 0 4px; vertical-align: middle">
-        <option value="asoul">asoul</option>
-        <option value="moebooru">moebooru</option>
-        <option value="moebooru-h">moebooru-h</option>
-        <option value="rule34">rule34</option>
-        <option value="gelbooru">gelbooru</option>
-        <option value="gelbooru-h">gelbooru-h</option>
-      </select>
-      <button id="get">Get</button><img id="result" style="display: block" />
-      <script>
-        var btn = document.getElementById('get'),
-          img = document.getElementById('result');
-
-        btn.addEventListener('click', function () {
-          var name = document.getElementById('name'),
-            themeEl = document.getElementById('theme');
-          var text = name.value ? name.value.trim() : '';
-          var theme = themeEl.value || 'moebooru';
-          if (!text) {
-            alert('Please input counter name.');
-            return;
-          }
-
-          img.src = 'https://moe.cy96.ggff.net/' + text + '?theme=' + theme;
-        });
-      </script>
+</head>
+<body>
+    <div class="container">
+        <h1>🌸 Moe Counter</h1>
+        
+        <p class="lead">这是一个萌萌的访客计数器，可以嵌入到 Markdown、网页或者其他任何地方，有多种风格可选。</p>
+        
+        <div class="notice">
+            <p>❤️ 本项目为 <a href="https://github.com/journey-ad/Moe-Counter" target="_blank">Moe Counter</a> 的分支版本，基于 <a href="https://workers.cloudflare.com/" target="_blank">Cloudflare Workers</a> 构建。</p>
+            <p><strong>⚠️ 重要提示：</strong>数据公开可见，请勿输入任何个人信息！</p>
+        </div>
+        
+        <h2>使用方法</h2>
+        <article>
+            <h3>SVG 地址</h3>
+            <code id="svg-url" class="block">loading...</code>
+            
+            <h3>HTML 代码</h3>
+            <code id="html-code" class="block">loading...</code>
+            
+            <h3>Markdown 代码</h3>
+            <code id="markdown-code" class="block">loading...</code>
+        </article>
+        
+        <div class="counter-example">
+            <img id="demo-img" src="" alt="Moe Counter Demo" height="100" />
+        </div>
+        
+        <details>
+            <summary><h2 style="display: inline-block">主题样式</h2></summary>
+            <p>只需在URL中添加 <code>theme</code> 参数，例如：<code id="theme-example">loading...</code></p>
+            
+            <div class="theme-gallery">
+                <div class="theme-card">
+                    <img src="" data-theme="asoul" alt="A-SOUL">
+                    <div class="theme-name">A-SOUL</div>
+                </div>
+                <div class="theme-card">
+                    <img src="" data-theme="moebooru" alt="Moebooru">
+                    <div class="theme-name">Moebooru</div>
+                </div>
+                <div class="theme-card">
+                    <img src="" data-theme="moebooru-h" alt="Moebooru-Hentai">
+                    <div class="theme-name">Moebooru-Hentai</div>
+                </div>
+                <div class="theme-card">
+                    <img src="" data-theme="rule34" alt="Rule34">
+                    <div class="theme-name">Rule34 (NSFW)</div>
+                </div>
+                <div class="theme-card">
+                    <img src="" data-theme="gelbooru" alt="Gelbooru">
+                    <div class="theme-name">Gelbooru</div>
+                </div>
+                <div class="theme-card">
+                    <img src="" data-theme="gelbooru-h" alt="Gelbooru-Hentai">
+                    <div class="theme-name">Gelbooru-Hentai (NSFW)</div>
+                </div>
+            </div>
+        </details>
+        
+        <div class="generator-box">
+            <h2>生成你的计数器</h2>
+            <div class="input-group">
+                <input id="name" type="text" placeholder="输入计数器名称" />
+                <select id="theme">
+                    <option value="asoul">A-SOUL</option>
+                    <option value="moebooru">Moebooru</option>
+                    <option value="moebooru-h">Moebooru-Hentai</option>
+                    <option value="rule34">Rule34</option>
+                    <option value="gelbooru">Gelbooru</option>
+                    <option value="gelbooru-h">Gelbooru-Hentai</option>
+                </select>
+                <button id="get" class="secondary">生成</button>
+            </div>
+            <code id="generated-url" class="block"></code>
+            <img id="result" />
+        </div>
+        
+        <footer>
+            <p><a href="https://github.com/lxchapu/moe-counter" target="_blank">查看源代码</a></p>
+            <p>❤️ 欢迎贡献主题资源</p>
+        </footer>
     </div>
 
-    <p>
-      <a href="https://github.com/lxchapu/moe-counter" target="_blank">source code</a>
-    </p>
-  </body>
+    <script>
+        // 自动获取当前域名
+        const currentDomain = window.location.origin;
+        const basePath = "/:id";
+        const defaultTheme = "moebooru";
+        
+        // 更新所有URL
+        function updateUrls() {
+            // 更新示例URL
+            document.getElementById('svg-url').textContent = currentDomain + basePath;
+            document.getElementById('html-code').textContent = 
+                `<img src="${currentDomain + basePath}" alt=":id" />`;
+            document.getElementById('markdown-code').textContent = 
+                `![:id](${currentDomain + basePath})`;
+            document.getElementById('theme-example').textContent = 
+                `${currentDomain + basePath}?theme=${defaultTheme}`;
+            
+            // 更新demo图片
+            document.getElementById('demo-img').src = `${currentDomain}/github@moe-counter?theme=asoul`;
+            
+            // 更新主题预览图
+            document.querySelectorAll('.theme-card img').forEach(img => {
+                const theme = img.dataset.theme;
+                img.src = `${currentDomain}/demo?theme=${theme}`;
+            });
+        }
+        
+        // 生成器功能
+        document.getElementById('get').addEventListener('click', function() {
+            const name = document.getElementById('name').value.trim();
+            const theme = document.getElementById('theme').value;
+            
+            if (!name) {
+                alert('请输入计数器名称');
+                return;
+            }
+            
+            const counterUrl = `${currentDomain}/${encodeURIComponent(name)}?theme=${theme}`;
+            document.getElementById('generated-url').textContent = counterUrl;
+            document.getElementById('result').src = counterUrl;
+        });
+        
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', updateUrls);
+    </script>
+</body>
 </html>
