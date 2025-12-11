@@ -43,6 +43,7 @@ DROP TABLE IF EXISTS view
 
 CREATE TABLE IF NOT EXISTS view (id TEXT PRIMARY KEY, num INTEGER)
 ```
+- 下面的基本不用干了 都自动弄好了 除了下面的域名，但是这个可弄可不弄 因为貌似没影响，该用正常用
 - 在 `wrangler.toml` 中修改对应的数据库名称和数据库 ID
 
   ```toml
