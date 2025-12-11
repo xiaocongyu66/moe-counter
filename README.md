@@ -87,3 +87,5 @@ theme: 'moebooru'
 ## License
 
 MIT &copy; 柃夏chapu
+
+<https://github.com/lxchapu/moe-counter>
