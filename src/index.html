@@ -1,255 +1,458 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Moe Counter</title>
-    <meta name="description" content="萌萌的访客计数器，支持多种风格主题" />
-    <meta name="keywords" content="moe, visitor counter, 访客计数器, Cloudflare Workers" />
-    <meta name="author" content="柃夏chapu" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://moe-counter.lxchapu.com/" />
-    <meta property="og:title" content="Moe Counter" />
-    <meta property="og:description" content="这是一个萌萌的访客计数器，可以嵌入到 Markdown、网页或者其他任何地方，有多种风格可选。" />
-    <meta property="og:image" content="https://s2.loli.net/2024/03/05/3XO1azMjC589Fd6.webp" />
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content="Moe Counter" />
-    <meta property="twitter:description" content="这是一个萌萌的访客计数器，可以嵌入到 Markdown、网页或者其他任何地方，有多种风格可选。" />
-    <meta property="twitter:image" content="https://s2.loli.net/2024/03/05/3XO1azMjC589Fd6.webp" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Moe Counter - 萌萌访客计数器</title>
+    <meta name="description" content="个性化萌系访客计数器，多种主题一键生成">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #ff6b6b;
-            --secondary: #4ecdc4;
-            --border-radius: 12px;
+            --primary: #ff7eb9;
+            --secondary: #7afcff;
+            --accent: #ff65a3;
+            --background: #f9f7ff;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text: #2e2e48;
+            --shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #f9f7ff 0%, #e6e3ff 100%);
+            color: var(--text);
             min-height: 100vh;
             padding: 2rem 1rem;
+            line-height: 1.6;
         }
-        
+
         .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 150px;
+            height: 150px;
+            background: var(--primary);
+            opacity: 0.1;
+            border-radius: 50%;
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: -80px;
+            right: -80px;
+            width: 200px;
+            height: 200px;
+            background: var(--secondary);
+            opacity: 0.1;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        h1 {
+            color: var(--accent);
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .lead {
+            font-size: 1.2rem;
+            color: #666;
             max-width: 800px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: var(--border-radius);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 2.5rem;
+            position: relative;
+            z-index: 1;
         }
-        
-        h1 {
-            color: var(--primary);
-            text-align: center;
-            margin-bottom: 2rem;
-            font-weight: 700;
-        }
-        
-        .counter-example {
+
+        .hero-section {
             display: flex;
-            justify-content: center;
-            margin: 2rem 0;
-            padding: 1rem;
-            background: #f8f9fa;
-            border-radius: var(--border-radius);
+            gap: 2rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
         }
-        
+
+        .usage-card {
+            flex: 1;
+            min-width: 300px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .usage-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .usage-card h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .usage-card h2 i {
+            font-size: 1.5rem;
+        }
+
+        .code-block {
+            background: #2e2e48;
+            color: #f1f1ff;
+            padding: 1.2rem;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            overflow-x: auto;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .code-block::after {
+            content: "点击复制";
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .preview-section {
+            text-align: center;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+        }
+
+        .counter-preview {
+            display: inline-block;
+            padding: 1.5rem;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            margin: 1.5rem 0;
+            transition: var(--transition);
+        }
+
+        .counter-preview:hover {
+            transform: scale(1.03);
+        }
+
         .theme-gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
             margin: 2rem 0;
         }
-        
+
         .theme-card {
-            border: 1px solid #e9ecef;
-            border-radius: var(--border-radius);
+            background: var(--card-bg);
+            border-radius: var(--radius);
             overflow: hidden;
-            transition: transform 0.3s ease;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
         }
-        
+
         .theme-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
         }
-        
+
         .theme-card img {
             width: 100%;
-            height: auto;
-            display: block;
+            height: 150px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--primary);
         }
-        
-        .theme-name {
-            padding: 0.75rem;
+
+        .theme-info {
+            padding: 1.2rem;
             text-align: center;
-            background: var(--secondary);
-            color: white;
-            font-weight: 500;
         }
-        
+
+        .theme-name {
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
         .generator-box {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            margin: 2rem 0;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            margin: 3rem 0;
         }
-        
+
+        .generator-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .generator-header h2 {
+            color: var(--accent);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
         .input-group {
             display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        input, select {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.8rem 1.2rem;
+            border: 2px solid #e0e0ff;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: white;
+            transition: var(--transition);
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 126, 185, 0.2);
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
             align-items: center;
+            gap: 0.5rem;
         }
-        
-        #result {
-            margin-top: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        button:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 101, 163, 0.3);
         }
-        
-        .notice {
-            background: #fff3cd;
-            color: #856404;
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            margin: 1rem 0;
-        }
-        
-        footer {
+
+        .live-preview {
             text-align: center;
             margin-top: 2rem;
-            color: #6c757d;
+            padding: 2rem;
+            background: white;
+            border-radius: var(--radius);
+            position: relative;
+        }
+
+        .live-preview-label {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--secondary);
+            color: var(--text);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 3px 10px rgba(122, 252, 255, 0.3);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                flex-direction: column;
+            }
+            
+            .usage-card {
+                min-width: 100%;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🌸 Moe Counter</h1>
-        
-        <p class="lead">这是一个萌萌的访客计数器，可以嵌入到 Markdown、网页或者其他任何地方，有多种风格可选。</p>
-        
-        <div class="notice">
-            <p>❤️ 本项目为 <a href="https://github.com/journey-ad/Moe-Counter" target="_blank">Moe Counter</a> 的分支版本，基于 <a href="https://workers.cloudflare.com/" target="_blank">Cloudflare Workers</a> 构建。</p>
-            <p><strong>⚠️ 重要提示：</strong>数据公开可见，请勿输入任何个人信息！</p>
-        </div>
-        
-        <h2>使用方法</h2>
-        <article>
-            <h3>SVG 地址</h3>
-            <code id="svg-url" class="block">loading...</code>
-            
-            <h3>HTML 代码</h3>
-            <code id="html-code" class="block">loading...</code>
-            
-            <h3>Markdown 代码</h3>
-            <code id="markdown-code" class="block">loading...</code>
-        </article>
-        
-        <div class="counter-example">
-            <img id="demo-img" src="" alt="Moe Counter Demo" height="100" />
-        </div>
-        
-        <details>
-            <summary><h2 style="display: inline-block">主题样式</h2></summary>
-            <p>只需在URL中添加 <code>theme</code> 参数，例如：<code id="theme-example">loading...</code></p>
-            
-            <div class="theme-gallery">
-                <div class="theme-card">
-                    <img src="" data-theme="asoul" alt="A-SOUL">
-                    <div class="theme-name">A-SOUL</div>
-                </div>
-                <div class="theme-card">
-                    <img src="" data-theme="moebooru" alt="Moebooru">
-                    <div class="theme-name">Moebooru</div>
-                </div>
-                <div class="theme-card">
-                    <img src="" data-theme="moebooru-h" alt="Moebooru-Hentai">
-                    <div class="theme-name">Moebooru-Hentai</div>
-                </div>
-                <div class="theme-card">
-                    <img src="" data-theme="rule34" alt="Rule34">
-                    <div class="theme-name">Rule34 (NSFW)</div>
-                </div>
-                <div class="theme-card">
-                    <img src="" data-theme="gelbooru" alt="Gelbooru">
-                    <div class="theme-name">Gelbooru</div>
-                </div>
-                <div class="theme-card">
-                    <img src="" data-theme="gelbooru-h" alt="Gelbooru-Hentai">
-                    <div class="theme-name">Gelbooru-Hentai (NSFW)</div>
-                </div>
+        <header>
+            <h1><i class="fas fa-heart"></i> Moe Counter</h1>
+            <p class="lead">创建属于你的个性化萌系访客计数器，多种风格主题一键生成</p>
+        </header>
+
+        <div class="hero-section">
+            <div class="usage-card">
+                <h2><i class="fas fa-link"></i> SVG 地址</h2>
+                <div class="code-block" id="svgUrl">loading...</div>
             </div>
-        </details>
-        
+            
+            <div class="usage-card">
+                <h2><i class="fas fa-code"></i> HTML 代码</h2>
+                <div class="code-block" id="htmlCode">loading...</div>
+            </div>
+            
+            <div class="usage-card">
+                <h2><i class="fab fa-markdown"></i> Markdown 代码</h2>
+                <div class="code-block" id="markdownCode">loading...</div>
+            </div>
+        </div>
+
+        <div class="preview-section">
+            <h2>效果预览</h2>
+            <div class="counter-preview">
+                <img id="demoPreview" src="" alt="计数器预览" height="80">
+            </div>
+            <p>实时更新 • 多主题可选 • 自动计数</p>
+        </div>
+
         <div class="generator-box">
-            <h2>生成你的计数器</h2>
+            <div class="generator-header">
+                <h2><i class="fas fa-magic"></i> 生成你的计数器</h2>
+                <p>输入名称并选择主题，实时生成专属计数器</p>
+            </div>
+            
             <div class="input-group">
-                <input id="name" type="text" placeholder="输入计数器名称" />
-                <select id="theme">
+                <input type="text" id="counterName" placeholder="输入计数器名称 (例如: my-counter)" />
+                <select id="themeSelect">
                     <option value="asoul">A-SOUL</option>
                     <option value="moebooru">Moebooru</option>
                     <option value="moebooru-h">Moebooru-Hentai</option>
-                    <option value="rule34">Rule34</option>
+                    <option value="rule34">Rule34 (NSFW)</option>
                     <option value="gelbooru">Gelbooru</option>
-                    <option value="gelbooru-h">Gelbooru-Hentai</option>
+                    <option value="gelbooru-h">Gelbooru-Hentai (NSFW)</option>
                 </select>
-                <button id="get" class="secondary">生成</button>
+                <button id="generateBtn">
+                    <i class="fas fa-wand-magic-sparkles"></i> 立即生成
+                </button>
             </div>
-            <code id="generated-url" class="block"></code>
-            <img id="result" />
+            
+            <div class="code-block" id="generatedUrl">生成后将显示在这里</div>
+            
+            <div class="live-preview">
+                <div class="live-preview-label">实时预览</div>
+                <img id="livePreview" src="" alt="实时预览" height="100" style="margin-top: 1.5rem;">
+            </div>
         </div>
-        
+
         <footer>
-            <p><a href="https://github.com/lxchapu/moe-counter" target="_blank">查看源代码</a></p>
-            <p>❤️ 欢迎贡献主题资源</p>
+            <p>❤️ 基于 Cloudflare Workers 构建 | <a href="https://github.com/lxchapu/moe-counter" target="_blank">查看源代码</a></p>
+            <p style="margin-top: 1rem;">⚠️ 注意：所有数据公开可见，请勿输入敏感信息</p>
         </footer>
     </div>
 
     <script>
         // 自动获取当前域名
         const currentDomain = window.location.origin;
-        const basePath = "/:id";
-        const defaultTheme = "moebooru";
+        const defaultName = "your-counter-name";
+        const defaultTheme = "asoul";
         
-        // 更新所有URL
-        function updateUrls() {
-            // 更新示例URL
-            document.getElementById('svg-url').textContent = currentDomain + basePath;
-            document.getElementById('html-code').textContent = 
-                `<img src="${currentDomain + basePath}" alt=":id" />`;
-            document.getElementById('markdown-code').textContent = 
-                `![:id](${currentDomain + basePath})`;
-            document.getElementById('theme-example').textContent = 
-                `${currentDomain + basePath}?theme=${defaultTheme}`;
+        // DOM 元素
+        const elements = {
+            svgUrl: document.getElementById('svgUrl'),
+            htmlCode: document.getElementById('htmlCode'),
+            markdownCode: document.getElementById('markdownCode'),
+            demoPreview: document.getElementById('demoPreview'),
+            counterName: document.getElementById('counterName'),
+            themeSelect: document.getElementById('themeSelect'),
+            generateBtn: document.getElementById('generateBtn'),
+            generatedUrl: document.getElementById('generatedUrl'),
+            livePreview: document.getElementById('livePreview')
+        };
+
+        // 更新示例URL
+        function updateExamples() {
+            const exampleUrl = `${currentDomain}/${defaultName}`;
             
-            // 更新demo图片
-            document.getElementById('demo-img').src = `${currentDomain}/github@moe-counter?theme=asoul`;
-            
-            // 更新主题预览图
-            document.querySelectorAll('.theme-card img').forEach(img => {
-                const theme = img.dataset.theme;
-                img.src = `${currentDomain}/demo?theme=${theme}`;
-            });
+            elements.svgUrl.textContent = exampleUrl;
+            elements.htmlCode.textContent = `<img src="${exampleUrl}" alt="${defaultName}" />`;
+            elements.markdownCode.textContent = `![${defaultName}](${exampleUrl})`;
+            elements.demoPreview.src = `${currentDomain}/github@moe-counter?theme=${defaultTheme}`;
         }
-        
-        // 生成器功能
-        document.getElementById('get').addEventListener('click', function() {
-            const name = document.getElementById('name').value.trim();
-            const theme = document.getElementById('theme').value;
-            
-            if (!name) {
-                alert('请输入计数器名称');
-                return;
-            }
-            
+
+        // 生成计数器
+        function generateCounter() {
+            const name = elements.counterName.value.trim() || defaultName;
+            const theme = elements.themeSelect.value;
             const counterUrl = `${currentDomain}/${encodeURIComponent(name)}?theme=${theme}`;
-            document.getElementById('generated-url').textContent = counterUrl;
-            document.getElementById('result').src = counterUrl;
+            
+            elements.generatedUrl.textContent = counterUrl;
+            elements.livePreview.src = counterUrl;
+        }
+
+        // 复制代码功能
+        document.querySelectorAll('.code-block').forEach(block => {
+            block.addEventListener('click', () => {
+                const text = block.textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = block.textContent;
+                    block.textContent = '✅ 已复制到剪贴板！';
+                    setTimeout(() => {
+                        block.textContent = originalText;
+                    }, 1500);
+                });
+            });
         });
-        
-        // 页面加载时初始化
-        document.addEventListener('DOMContentLoaded', updateUrls);
+
+        // 主题切换实时预览
+        elements.themeSelect.addEventListener('change', generateCounter);
+        elements.counterName.addEventListener('input', generateCounter);
+        elements.generateBtn.addEventListener('click', generateCounter);
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            updateExamples();
+            // 初始生成一次预览
+            setTimeout(generateCounter, 500);
+        });
     </script>
 </body>
 </html>
