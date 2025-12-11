@@ -36,7 +36,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px; /* 调整为更宽的最大宽度 */
             margin: 0 auto;
         }
 
@@ -65,16 +65,16 @@
             margin: 0 auto;
         }
 
-        .hero-section {
+        /* 修改为垂直布局 */
+        .usage-section {
             display: flex;
+            flex-direction: column;
             gap: 2rem;
             margin-bottom: 3rem;
-            flex-wrap: wrap;
         }
 
         .usage-card {
-            flex: 1;
-            min-width: 300px;
+            width: 100%;
             background: var(--card-bg);
             border-radius: var(--radius);
             padding: 2rem;
@@ -94,6 +94,7 @@
             display: flex;
             align-items: center;
             gap: 0.8rem;
+            font-size: 1.4rem;
         }
 
         .code-block {
@@ -102,13 +103,14 @@
             padding: 1.2rem;
             border-radius: 10px;
             font-family: 'Fira Code', monospace;
-            font-size: 0.95rem;
+            font-size: 1rem; /* 增大字体大小 */
             overflow-x: auto;
-            white-space: pre-wrap; /* 关键修改：支持自动换行 */
+            white-space: pre-wrap;
             word-break: break-all;
             margin: 1rem 0;
             position: relative;
             border: 1px solid rgba(255, 255, 255, 0.05);
+            line-height: 1.8; /* 增加行高 */
         }
 
         .code-block::after {
@@ -150,39 +152,6 @@
             margin: 2rem 0;
         }
 
-        .theme-card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .theme-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 126, 185, 0.3);
-        }
-
-        .theme-card img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-bottom: 3px solid var(--primary);
-        }
-
-        .theme-info {
-            padding: 1.2rem;
-            text-align: center;
-        }
-
-        .theme-name {
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
         .generator-box {
             background: var(--card-bg);
             border-radius: var(--radius);
@@ -197,6 +166,12 @@
             margin-bottom: 2rem;
         }
 
+        .generator-header h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
         .input-group {
             display: flex;
             gap: 1rem;
@@ -206,7 +181,7 @@
 
         input, select {
             flex: 1;
-            min-width: 200px;
+            min-width: 250px; /* 增大最小宽度 */
             padding: 0.8rem 1.2rem;
             border: 2px solid rgba(255, 255, 255, 0.1);
             border-radius: 10px;
@@ -234,6 +209,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            min-width: 150px; /* 添加最小宽度 */
         }
 
         button:hover {
@@ -272,22 +248,39 @@
             color: #a0a0d0;
         }
 
-        @media (max-width: 768px) {
-            .hero-section {
-                flex-direction: column;
+        @media (min-width: 992px) {
+            /* 电脑端优化 */
+            .container {
+                padding: 0 2rem;
             }
             
             .usage-card {
-                min-width: 100%;
+                padding: 2.5rem;
             }
             
+            .code-block {
+                font-size: 1.1rem;
+                padding: 1.5rem;
+            }
+            
+            .input-group {
+                flex-wrap: nowrap;
+            }
+        }
+
+        @media (max-width: 768px) {
             h1 {
                 font-size: 2.2rem;
             }
             
             .code-block {
-                font-size: 0.85rem;
+                font-size: 0.92rem;
                 padding: 1rem;
+            }
+            
+            button {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
@@ -299,7 +292,8 @@
             <p class="lead">创建属于你的个性化萌系访客计数器，多种风格主题一键生成</p>
         </header>
 
-        <div class="hero-section">
+        <!-- 改为垂直布局的用法区域 -->
+        <div class="usage-section">
             <div class="usage-card">
                 <h2><i class="fas fa-link"></i> SVG 地址</h2>
                 <div class="code-block" id="svgUrl">loading...</div>
@@ -353,7 +347,7 @@
         </div>
 
         <footer>
-            <p>❤️ 基于 Cloudflare Workers 构建 | <a href="https://github.com/lxchapu/moe-counter" target="_blank">查看源代码</a></p>
+            <p>❤️ 基于 Cloudflare Workers 构建 | <a href="https://github.com/lxchapu/moe-counter" target="_blank" style="color: var(--secondary);">查看源代码</a></p>
             <p style="margin-top: 1rem;">⚠️ 注意：所有数据公开可见，请勿输入敏感信息</p>
         </footer>
     </div>
