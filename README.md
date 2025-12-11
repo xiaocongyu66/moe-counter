@@ -37,6 +37,12 @@
 
 - 分叉这个仓库
 - 在 [Cloudflare D1](https://developers.cloudflare.com/d1/) 创建一个数据库
+- 打开D1 SQL 控制台 分别执行以下两行指令
+```SQL
+DROP TABLE IF EXISTS view
+
+CREATE TABLE IF NOT EXISTS view (id TEXT PRIMARY KEY, num INTEGER)
+```
 - 在 `wrangler.toml` 中修改对应的数据库名称和数据库 ID
 
   ```toml
