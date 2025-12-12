@@ -19,6 +19,15 @@
 
 ![rule34](https://moe-counter.lxchapu.com/demo?theme=rule34)
 
+**booru-jaypee**
+
+![booru-jaypee](https://moe.cy96.ggff.net/demo?theme=booru-jaypee)
+
+**booru-smtg**
+
+![booru-smtg](https://moe.cy96.ggff.net/demo?theme=booru-smtg)
+
+
 **gelbooru**
 
 ![gelbooru](https://moe-counter.lxchapu.com/demo?theme=gelbooru)
