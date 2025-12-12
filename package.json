@@ -18,6 +18,8 @@
     "yamljs": "^0.3.0"
   },
   "dependencies": {
-    "itty-router": "^4.0.27"
+    "itty-router": "^3.0.11",
+    "path-browserify": "^1.0.1",
+    "yamljs": "^0.3.0"
   }
 }
