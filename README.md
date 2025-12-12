@@ -45,7 +45,7 @@
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/xiaocongyu66/moe-counter-D1)
 
 - 分叉这个仓库
-- 在 [Cloudflare D1](https://developers.cloudflare.com/d1/) 创建一个数据库
+- 在 [Cloudflare D1](https://developers.cloudflare.com/d1/) 创建一个数据库(一键部署可以不用这么干)
 - 打开D1 SQL 控制台 分别执行以下两行指令
 ```SQL
 DROP TABLE IF EXISTS view
