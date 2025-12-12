@@ -44,6 +44,8 @@
 
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/xiaocongyu66/moe-counter-D1)
 
+- 点击按钮无需配置，直接部署，部署后，按照下列步骤
+
 - 打开D1 SQL 控制台 分别执行以下两行指令
 ```SQL
 DROP TABLE IF EXISTS view
