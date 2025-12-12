@@ -42,7 +42,7 @@
 
 **自己部署**
 
-[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/xiaocongyu66/moe-counter)
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/xiaocongyu66/moe-counter-D1)
 
 - 分叉这个仓库
 - 在 [Cloudflare D1](https://developers.cloudflare.com/d1/) 创建一个数据库
@@ -52,7 +52,7 @@ DROP TABLE IF EXISTS view
 
 CREATE TABLE IF NOT EXISTS view (id TEXT PRIMARY KEY, num INTEGER)
 ```
-- 下面的基本不用干了 都自动弄好了 除了下面的域名，但是这个可弄可不弄 因为貌似没影响，该用正常用
+- 下面的基本不用干了 都自动弄好了 除了下面的域名 这个是必需品 填写为你的域名或者子域名 cloudfare会自动添加dns记录 然后就能部署成功
 - (cloudfare会自动创建储存库名字是一样的)
 - 返回github在自己的储存库中 `wrangler.toml` 中修改对应的数据库名称和数据库 ID
 
