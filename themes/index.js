@@ -64,6 +64,28 @@ import ru_7 from './rule34/7.gif';
 import ru_8 from './rule34/8.gif';
 import ru_9 from './rule34/9.gif';
 
+import bj_0 from './booru-jaypee/0.gif';
+import bj_1 from './booru-jaypee/1.gif';
+import bj_2 from './booru-jaypee/2.gif';
+import bj_3 from './booru-jaypee/3.gif';
+import bj_4 from './booru-jaypee/4.gif';
+import bj_5 from './booru-jaypee/5.gif';
+import bj_6 from './booru-jaypee/6.gif';
+import bj_7 from './booru-jaypee/7.gif';
+import bj_8 from './booru-jaypee/8.gif';
+import bj_9 from './booru-jaypee/9.gif';
+
+import bs_0 from './booru-smtg/0.gif';
+import bs_1 from './booru-smtg/1.gif';
+import bs_2 from './booru-smtg/2.gif';
+import bs_3 from './booru-smtg/3.gif';
+import bs_4 from './booru-smtg/4.gif';
+import bs_5 from './booru-smtg/5.gif';
+import bs_6 from './booru-smtg/6.gif';
+import bs_7 from './booru-smtg/7.gif';
+import bs_8 from './booru-smtg/8.gif';
+import bs_9 from './booru-smtg/9.gif';
+
 export default {
   asoul: {
     width: 45,
@@ -94,5 +116,15 @@ export default {
     width: 45,
     height: 100,
     images: [ru_0, ru_1, ru_2, ru_3, ru_4, ru_5, ru_6, ru_7, ru_8, ru_9],
+  },
+  booru-jaypee: {
+    width: 45,
+    height: 100,
+    images: [bj_0, bj_1, bj_2, bj_3, bj_4, bj_5, bj_6, bj_7, bj_8, bj_9],
+  },
+  booru-smtg: {
+    width: 45,
+    height: 100,
+    images: [bs_0, bs_1, bs_2, bs_3, bs_4, bs_5, bs_6, bs_7, bs_8, bs_9],
   },
 };
