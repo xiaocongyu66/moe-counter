@@ -36,7 +36,7 @@
 
 ## Demo
 
-<https://moe-counter.lxchapu.com>
+<https://moe.cy96.ggff.net/>
 
 ## Usage
 
