@@ -112,7 +112,7 @@ export default {
     height: 100,
     images: [mh_0, mh_1, mh_2, mh_3, mh_4, mh_5, mh_6, mh_7, mh_8, mh_9],
   },
-  'rule34': {
+  rule34: {
     width: 45,
     height: 100,
     images: [ru_0, ru_1, ru_2, ru_3, ru_4, ru_5, ru_6, ru_7, ru_8, ru_9],
@@ -122,7 +122,7 @@ export default {
     height: 100,
     images: [bj_0, bj_1, bj_2, bj_3, bj_4, bj_5, bj_6, bj_7, bj_8, bj_9],
   },
-  booru-smtg: {
+  'booru-smtg': {
     width: 45,
     height: 100,
     images: [bs_0, bs_1, bs_2, bs_3, bs_4, bs_5, bs_6, bs_7, bs_8, bs_9],
