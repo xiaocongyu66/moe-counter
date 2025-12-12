@@ -1,8 +1,11 @@
 import themes from '../themes';
-import sizeOf from 'image-size';
-import mime from 'mime-types';
 
-// 辅助函数：保留指定位数的小数
+/**
+ * 辅助函数：保留指定位数的小数
+ * @param {number} num 数字
+ * @param {number} precision 保留小数位数
+ * @returns {string}
+ */
 const toFixed = (num, precision) => {
   return num.toFixed(precision);
 };
