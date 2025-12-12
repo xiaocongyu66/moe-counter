@@ -15,6 +15,15 @@ module.exports = {
       type: 'module',
     },
   },
+  resolve: {
+    fallback: {
+      "path": require.resolve("path-browserify"),
+      "fs": false,
+      "util": false,
+      "buffer": false,
+      "stream": false
+    }
+  },
   module: {
     rules: [
       {
