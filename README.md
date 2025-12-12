@@ -52,15 +52,15 @@ CREATE TABLE IF NOT EXISTS view (id TEXT PRIMARY KEY, num INTEGER)
 ```
 
 
-- 在 `wrangler.toml` 中修改成自己的域名
+- 在你的储存库 `wrangler.toml` 中修改成自己的域名
+- (cloudfare会自动创建储存库名字是一样的)
+
 
   ```toml
   [[routes]]
   pattern = "<your custom domain>"
   ```
--这个是必需品 填写为你的域名或者子域名 cloudfare会自动添加dns记录 然后就能部署成功
-- (cloudfare会自动创建储存库名字是一样的)
-
+- 这个是必需品 填写为你的域名或者子域名 cloudfare会自动添加dns记录 然后就能部署成功
 
 **自己部署**
 
